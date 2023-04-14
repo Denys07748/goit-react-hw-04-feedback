@@ -1,0 +1,15 @@
+.stat-list {
+  list-style: none;
+  text-align: start;
+  display: table;
+  margin: 0 auto;
+  padding-left: 200px;
+}
+
+.stat-list p {
+  margin: 0;
+}
+
+.stat-list li:not(:last-child) {
+  margin-bottom: 20px;
+}
