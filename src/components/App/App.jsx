@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import css from './App.module.css';
 import Section from 'components/Section/Section';
 import FeedbackOptions from 'components/Feedback/FeedbackOptions';
@@ -9,34 +9,50 @@ const App = () => {
   const[good, setGood] = useState(0);
   const[neutral, setNeutral] = useState(0);
   const[bad, setBad] = useState(0);
-  const[total, setTotal] = useState(0);
-  const[percent, setPercent] = useState(0);
 
-  useEffect(() => {
-    setTotal(good + neutral + bad);
-    setPercent(Math.round(100 * (good/total)));
-  }, [good, neutral, bad, total]);
+  const countTotalFeedback = () => {
+    return good + neutral + bad;
+  };
 
-  const handleIncrementFeedback = (setOption) => {
-    return setOption(state => state + 1);
+  const countPositiveFeedbackPercentage = () => {
+    return Math.round(100 * (good/countTotalFeedback()));
+  };
+
+  const handleIncrementFeedback = (option) => {
+    switch (option) {
+      case 'good':
+        setGood(state => state + 1);
+        break;
+
+      case 'neutral':
+        setNeutral(state => state + 1);
+        break;
+
+      case 'bad':
+        setBad(state => state + 1);
+        break;
+
+      default:
+        return;
+    }
   };
 
     return (
       <div className={css.container}>
         <Section title='Pleace leave feedback'>
           <FeedbackOptions
-            options={[['good', setGood], ['neutral', setNeutral], ['bad', setBad]]}
+            options={['good', 'neutral', 'bad']}
             onLeaveFeedback={handleIncrementFeedback}
           />
         </Section>
         <Section title='Statistics'>
-          {total ? (
+          {countTotalFeedback() ? (
             <Statistics
               good={good}
               neutral={neutral}
               bad={bad}
-              total={total}
-              percent={percent}
+              total={countTotalFeedback()}
+              percent={countPositiveFeedbackPercentage()}
             />
           ) : (<Notification message='There is no feedback'/>)}
         </Section>

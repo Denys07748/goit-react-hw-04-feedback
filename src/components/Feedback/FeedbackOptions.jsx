@@ -4,11 +4,11 @@ import css from './FeedbackOptions.module.css';
 const FeedbackOptions = ({options, onLeaveFeedback}) => {
     return (
         <div className={css['button-box']}>
-            {options.map(([option, setOption]) => 
+            {options.map((option) => 
                 <button 
                     type='button' 
                     key={option} 
-                    onClick={() => onLeaveFeedback(setOption)}
+                    onClick={() => onLeaveFeedback(option)}
                 >{option}</button>
             )}
         </div>
@@ -18,13 +18,6 @@ const FeedbackOptions = ({options, onLeaveFeedback}) => {
 export default FeedbackOptions;
 
 FeedbackOptions.propTypes = {
-    options:PropTypes.arrayOf(
-            PropTypes.arrayOf(
-                PropTypes.oneOfType([
-                    PropTypes.string.isRequired,
-                    PropTypes.func.isRequired,
-                ])
-            )
-        ).isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
     onLeaveFeedback: PropTypes.func.isRequired,
 }
